@@ -55,7 +55,6 @@ export function InteractiveGallery() {
   const [hovered, setHovered] = useState<{ row: number; slot: number; look: number } | null>(null);
   const [hint, setHint] = useState(true);
   const [depthLabel, setDepthLabel] = useState(0);
-  const [stageReady, setStageReady] = useState(false);
   const ordered = useMemo(() => rows.map((row, r) => slotIndices.map((slot) => ({
     slot,
     look: mod(slot + row.seed, looks.length),
@@ -148,7 +147,17 @@ export function InteractiveGallery() {
         ordered[r].forEach((item, j) => {
           const el = tileRefs.current[r][j];
           if (!el) return;
-          const x = w / 2 + (item.slot * spacing) - cam.x * parallax - cardWidth / 2;
+          const absoluteSlot = item.slot + baseIndex;
+          const lookIndex = mod(absoluteSlot + row.seed, looks.length);
+          const x = w / 2 + (absoluteSlot * spacing) - cam.x * parallax - cardWidth / 2;
+          if (el.dataset.look !== String(lookIndex)) {
+            el.dataset.look = String(lookIndex);
+            const image = el.querySelector("img");
+            if (image) { image.src = looks[lookIndex].image; image.alt = looks[lookIndex].title; }
+            const labels = el.querySelectorAll("span");
+            if (labels[0]) labels[0].textContent = `${String(mod(absoluteSlot, 99) + 1).padStart(2, "0")} / ${looks[lookIndex].label}`;
+            if (labels[1]) labels[1].textContent = looks[lookIndex].title;
+          }
           const yJitter = Math.sin((item.slot + row.seed * 17) * 1.73) * (r === 2 ? 9 : 6) * scale;
           const lean = (() => {
             const hv = hoverRef.current;
@@ -296,18 +305,18 @@ export function InteractiveGallery() {
       onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}
       onPointerLeave={() => { if (!pointer.current.down) clearHover(); }}
       onWheel={onWheel}
-      onFocus={() => setStageReady(true)}
     >
       <div className="gallery-gridlines" aria-hidden="true"/>
       <div className="gallery-world">
         {rows.map((row, r) => <div className="gallery-row" key={row.key} ref={(el) => { rowRefs.current[r] = el; }}>
           {ordered[r].map((item, j) => <div className="look-tile gallery-look" key={`${row.key}-${item.slot}`}
             ref={(el) => { tileRefs.current[r][j] = el; }}
-            onPointerEnter={() => { const rel = wrapRel(HOME_REL[r] - camera.current.targetDepth); if (Math.abs(rel) < .08) updateHover(r, j, item.look); }}
+            data-look={item.look}
+            onPointerEnter={(e) => { const rel = wrapRel(HOME_REL[r] - camera.current.targetDepth); if (Math.abs(rel) < .08) updateHover(r, j, Number((e.currentTarget as HTMLDivElement).dataset.look || 0)); }}
             onPointerLeave={clearHover}
-            onClick={() => focusLook(item.look)}
+            onClick={(e) => focusLook(Number((e.currentTarget as HTMLDivElement).dataset.look || 0))}
             role="button" tabIndex={0} aria-label={`Focus ${looks[item.look].title}`}
-            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); focusLook(item.look); } }}
+            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); focusLook(Number((e.currentTarget as HTMLDivElement).dataset.look || 0)); } }}
           >
             <img src={looks[item.look].image} alt={looks[item.look].title} draggable={false} loading={Math.abs(HOME_REL[r]) < 1 ? "eager" : "lazy"}/>
             <span className="tile-index">{String(item.slot + 12).padStart(2, "0")} <i>/ {looks[item.look].label}</i></span>
