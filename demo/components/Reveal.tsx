@@ -1,9 +1,10 @@
 "use client";
 import { motion, useReducedMotion } from "framer-motion";
+import type { ReactNode } from "react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 export function Reveal({ children, className = "", delay = 0, image = false }: {
-  children: React.ReactNode; className?: string; delay?: number; image?: boolean;
+  children: ReactNode; className?: string; delay?: number; image?: boolean;
 }) {
   const reduced = useReducedMotion();
   return <motion.div
