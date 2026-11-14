@@ -2,9 +2,9 @@ import Link from "next/link";
 import { SiteHeader } from "../../components/SiteHeader";
 import { Reveal } from "../../components/Reveal";
 const products=[
-  {name:"NO FUTURE",code:"DROP 001",image:"/images/no-future.webp",desc:"Industrial graphic / oversized silhouette"},
-  {name:"UNDERGROUND",code:"DROP 002",image:"/images/underground.webp",desc:"Garage culture / daily uniform"},
-  {name:"SAMURAI",code:"DROP 003",image:"/images/samurai.webp",desc:"Illustrated graphic / street classic"},
+  {name:"NO FUTURE",code:"DROP 001",image:"https://raw.githubusercontent.com/mrfictionbd-design/mrfiction-assets/main/tee-1.webp",desc:"Industrial graphic / oversized silhouette"},
+  {name:"UNDERGROUND",code:"DROP 002",image:"https://raw.githubusercontent.com/mrfictionbd-design/mrfiction-assets/main/tee-19.webp",desc:"Garage culture / daily uniform"},
+  {name:"SAMURAI",code:"DROP 003",image:"https://raw.githubusercontent.com/mrfictionbd-design/mrfiction-assets/main/tee-24.webp",desc:"Illustrated graphic / street classic"},
 ];
 export default function CollectionPage(){
   return <main className="collection-page"><SiteHeader/><section className="collection-hero">
