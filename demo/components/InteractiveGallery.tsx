@@ -3,9 +3,9 @@ import { useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useAnimationFrame, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 
 const looks = [
-  { id:"no-future", title:"NO FUTURE", label:"DROP 001", image:"/images/no-future.webp", line:"Built for the ones who move differently." },
-  { id:"underground", title:"UNDERGROUND", label:"DROP 002", image:"/images/underground.webp", line:"Street uniform. No permission required." },
-  { id:"samurai", title:"SAMURAI", label:"DROP 003", image:"/images/samurai.webp", line:"Quiet presence. Heavy impact." },
+  { id:"no-future", title:"NO FUTURE", label:"DROP 001", image:"https://raw.githubusercontent.com/mrfictionbd-design/mrfiction-assets/main/tee-1.webp", line:"Built for the ones who move differently." },
+  { id:"underground", title:"UNDERGROUND", label:"DROP 002", image:"https://raw.githubusercontent.com/mrfictionbd-design/mrfiction-assets/main/tee-19.webp", line:"Street uniform. No permission required." },
+  { id:"samurai", title:"SAMURAI", label:"DROP 003", image:"https://raw.githubusercontent.com/mrfictionbd-design/mrfiction-assets/main/tee-24.webp", line:"Quiet presence. Heavy impact." },
 ];
 const slots = [
   {x:5,y:5,z:0,look:0},{x:29,y:-5,z:1,look:1},{x:53,y:8,z:2,look:2},{x:77,y:-4,z:0,look:1},
