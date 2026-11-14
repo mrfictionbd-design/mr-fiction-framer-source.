@@ -4,9 +4,9 @@ import { InteractiveGallery } from "../components/InteractiveGallery";
 import { Reveal } from "../components/Reveal";
 
 const drops = [
-  {name:"NO FUTURE",code:"MF / 001",image:"/images/no-future.webp",note:"INDUSTRIAL / GRAPHIC"},
-  {name:"UNDERGROUND",code:"MF / 002",image:"/images/underground.webp",note:"GARAGE / CULTURE"},
-  {name:"SAMURAI",code:"MF / 003",image:"/images/samurai.webp",note:"ART / ATTITUDE"},
+  {name:"NO FUTURE",code:"MF / 001",image:"https://raw.githubusercontent.com/mrfictionbd-design/mrfiction-assets/main/tee-1.webp",note:"INDUSTRIAL / GRAPHIC"},
+  {name:"UNDERGROUND",code:"MF / 002",image:"https://raw.githubusercontent.com/mrfictionbd-design/mrfiction-assets/main/tee-19.webp",note:"GARAGE / CULTURE"},
+  {name:"SAMURAI",code:"MF / 003",image:"https://raw.githubusercontent.com/mrfictionbd-design/mrfiction-assets/main/tee-24.webp",note:"ART / ATTITUDE"},
 ];
 export default function HomePage(){
   return <main className="home-page">
@@ -19,7 +19,7 @@ export default function HomePage(){
         <Reveal delay={.08}><h1>MADE<br/><em>TO MOVE.</em></h1></Reveal>
         <Reveal delay={.16}><div className="hero-bottom"><p>Premium streetwear.<br/>A different point of view.</p><Link className="circle-link" href="/collection"><span>EXPLORE<br/>THE DROP</span><b>↗</b></Link></div></Reveal>
       </div>
-      <div className="hero-image-wrap"><img src="/images/underground.webp" alt="MR. FICTION oversized streetwear display"/></div>
+      <div className="hero-image-wrap"><img src="https://raw.githubusercontent.com/mrfictionbd-design/mrfiction-assets/main/tee-19.webp" alt="MR. FICTION oversized streetwear display"/></div>
       <div className="hero-side-note">VOLUME 001&nbsp; / &nbsp;THE EVERYDAY UNIFORM</div>
       <div className="hero-bottom-index"><span>SCROLL TO EXPLORE</span><span>01 — 03</span></div>
     </section>
