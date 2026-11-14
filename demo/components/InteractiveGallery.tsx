@@ -1,5 +1,6 @@
 "use client";
 import { useMemo, useRef, useState } from "react";
+import type { PointerEvent, WheelEvent } from "react";
 import { AnimatePresence, motion, useAnimationFrame, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 
 const looks = [
@@ -38,7 +39,7 @@ export function InteractiveGallery() {
     rawY.set(base.current.y + Math.sin(time/1900)*5.5);
     rawX.set(base.current.x + Math.cos(time/2700)*3.5);
   });
-  const onDown = (e:React.PointerEvent<HTMLDivElement>) => {
+  const onDown = (e:PointerEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest("button")) return;
     isDragging.current=true; didDrag.current=false; last.current={x:e.clientX,y:e.clientY};
     (e.currentTarget as HTMLDivElement).setPointerCapture(e.pointerId);
@@ -57,7 +58,7 @@ export function InteractiveGallery() {
     }
   };
   const onUp = () => {isDragging.current=false; setTimeout(()=>{didDrag.current=false;},60);};
-  const onWheel = (e:React.WheelEvent<HTMLDivElement>) => {
+  const onWheel = (e:WheelEvent<HTMLDivElement>) => {
     e.preventDefault(); setHint(false);
     rawZoom.set(Math.max(.72,Math.min(1.24,rawZoom.get()-e.deltaY*.00055)));
   };
