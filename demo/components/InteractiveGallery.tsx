@@ -276,18 +276,6 @@ export function InteractiveGallery() {
     return () => window.removeEventListener("keydown", onKey);
   }, [active, stepDepth]);
 
-  useEffect(() => {
-    const el = stageRef.current;
-    if (!el) return;
-    const handler = (event: globalThis.WheelEvent) => {
-      event.preventDefault();
-      const synthetic = { preventDefault: () => {}, deltaY: event.deltaY, deltaMode: event.deltaMode } as WheelEvent<HTMLDivElement>;
-      onWheel(synthetic);
-    };
-    el.addEventListener("wheel", handler, { passive: false });
-    return () => el.removeEventListener("wheel", handler);
-  });
-
   const updateHover = (row: number, slot: number, look: number) => {
     const value = { row, slot, look };
     hoverRef.current = value; setHovered(value);
