@@ -196,7 +196,6 @@ export function InteractiveGallery() {
     camera.current.vx = camera.current.vy = 0;
     lastInput.current = performance.now();
     setHint(false);
-    try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
   };
   const onPointerMove = (e: PointerEvent<HTMLDivElement>) => {
     const rect = stageRef.current?.getBoundingClientRect();
@@ -212,6 +211,7 @@ export function InteractiveGallery() {
     const moveX = mobile && p.axis === "y" ? 0 : dx;
     const moveY = mobile ? 0 : dy;
     if (p.moved > 5 && (moveX || moveY)) {
+      if (!e.currentTarget.hasPointerCapture(e.pointerId)) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch {} }
       const dt = Math.max(.008, (performance.now() - p.lastT) / 1000);
       camera.current.x -= moveX;
       camera.current.y -= moveY;
@@ -254,7 +254,6 @@ export function InteractiveGallery() {
     setDepthLabel(0); setActive(null); setHovered(null); hoverRef.current = null; setHint(true);
   };
   const focusLook = (look: number) => {
-    if (pointer.current.moved > 6) return;
     setActive(look); setHint(false); lastInput.current = performance.now();
   };
 
@@ -303,7 +302,7 @@ export function InteractiveGallery() {
             onPointerEnter={(e) => { const rel = wrapRel(HOME_REL[r] - camera.current.targetDepth); if (Math.abs(rel) < .08) updateHover(r, j, Number((e.currentTarget as HTMLDivElement).dataset.look || 0)); }}
             onPointerLeave={clearHover}
             onClick={(e) => focusLook(Number((e.currentTarget as HTMLDivElement).dataset.look || 0))}
-            role="button" tabIndex={0} aria-label={`Focus ${looks[item.look].title}`}
+            role="button" tabIndex={r === 2 ? 0 : -1} aria-label={`Focus ${looks[item.look].title}`}
             onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); focusLook(Number((e.currentTarget as HTMLDivElement).dataset.look || 0)); } }}
           >
             <img src={looks[item.look].image} alt={looks[item.look].title} draggable={false} loading={Math.abs(HOME_REL[r]) < 1 ? "eager" : "lazy"}/>
